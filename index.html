@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="body">
+<html lang="en">
 
 <head>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -19,7 +19,7 @@
 	}
 </style>
 
-<body style="overflow-y: scroll;" class="bg-default">
+<body  id="body" style="overflow-y: scroll;" class="bg-default">
 	<div class="header navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -527,8 +527,11 @@
 		let today = days[d.getDay()];
 		let tomorrow = days[d.getDay()+1];
 		let timeNow = formatAMPM(d);
-		timeNow = '09:10am';
+		timeNow = '01:10pm';
 		let upcomingClassTime;
+		let upcomingClass;
+		let counterText;
+		let blinker = ':';
 		let unclicked = true;
 		let danger = true;
 		let alarm = false;
@@ -552,10 +555,6 @@
 		window.setInterval(function(){
 		  	let update = new Date();
 		  	textTitle.innerHTML = "Today is " + today + ", Time is: " + formatAMPM(update);
-			 // $("#body").load(location.toString());
-		  	//if(unclicked) $("#body").load(location.toString());
-		  	// if(unclicked) location.reload();
-			timeNow = '10:10am';
 			alarmer(alarm);
 		  	if(tomorrowClicked) classTime(filter(false));
 		  	if(viewClicked) viewAll(true);
@@ -569,14 +568,17 @@
 				let countedDiff;
 				for(let i = 0; i<idArr.length; i++) {
 				if(!tomorrowClicked){
-					countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(formatAMPM(new Date())));
+					countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(new Date()));
 					if(countedDiff <= 0  && countedDiff >= -15 ){
 							audio = document.getElementById("audio");
 							audio.play();
-							audio.stop();
+							setTimeout(function(){location.reload();}, 3300);
 						}
 					}
 				}
+			}
+			else{
+				if(!tomorrowClicked && !viewClicked) location.reload();
 			}
 		}
 
@@ -693,7 +695,6 @@
 						let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(timeNow));
 					// alert(countedDiff);
 						let data = tableData[idArr[i]-1]["cells"][0].innerHTML;
-						parseInt(tableData[idArr[i]-1]["cells"][0].innerText.trim())<10? data : '0'+tableData[idArr[i]-1]["cells"][0].innerHTML;
 
 						if(countedDiff < -15 ){
 							tableData[idArr[i]-1]["cells"][0].innerHTML = '';
@@ -732,7 +733,6 @@
 					}
 				}
 
-			let upcomingClassTime;
 			upcomingClassTime = classHrMinFrmt[index];
 
 			if(!tomorrowClicked){
@@ -740,7 +740,7 @@
 					upcomingContext.innerText = '😁 No more class remaining today 😁';
 				}
 				else{
-					let upcomingClass = courseArr[index];
+					upcomingClass = courseArr[index];
 					upcomingContext.innerText = '⏰ '+upcomingClass + ', at ' + formatAMPM(upcomingClassTime)+' ⏰';
 				}
 				if(today == 'Friday'){
@@ -755,8 +755,8 @@
 				}
 			}
 			upcomingContext.classList.add("text-primary");
-			let counterText = countdownTimer(upcomingClassTime);
-			let blinker = ':';
+			counterText = countdownTimer(upcomingClassTime);
+
 			counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
 			window.setInterval(function(){
 			blinker = blinker == ' ' ? ':': ' ';
