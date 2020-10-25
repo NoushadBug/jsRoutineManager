@@ -527,7 +527,6 @@
 		let today = days[d.getDay()];
 		let tomorrow = days[d.getDay()+1];
 		let timeNow = formatAMPM(d);
-		timeNow = '01:10pm';
 		let upcomingClassTime;
 		let upcomingClass;
 		let counterText;
@@ -690,11 +689,11 @@
 			console.log('\nindex: ' + index); //we got the index of the upcoming class's table row
 			let counter = 0;
 				for(let i = 0; i<idArr.length; i++) {
-
-					if(!tomorrowClicked){
+					let data = tableData[idArr[i]-1]["cells"][0].innerHTML;
+					
+					if(!tomorrowClicked && (data.indexOf('✔️') == -1) && (data.indexOf('⌛') == -1) && (data.indexOf('🕐') == -1)){
 						let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(timeNow));
 					// alert(countedDiff);
-						let data = tableData[idArr[i]-1]["cells"][0].innerHTML;
 
 						if(countedDiff < -15 ){
 							tableData[idArr[i]-1]["cells"][0].innerHTML = '';
