@@ -550,8 +550,8 @@
 		window.setInterval(function(){
 		  	let update = new Date();
 		  	textTitle.innerHTML = "Today is " + today + ", Time is: " + formatAMPM(update);
-			  $("#body").load(location.toString());
-		  	//if(unclicked && !alarm) location.reload();
+			 // $("#body").load(location.toString());
+		  	if(unclicked) location.reload();
 		  	if(tomorrowClicked) classTime(filter(false));
 		  	if(viewClicked) viewAll(true);
 
@@ -695,10 +695,14 @@
 							tableData[idArr[i]-1].style.backgroundColor = "coral";
 							tableData[idArr[i]-1].style.fontWeight = "bold";
 
-							button.addEventListener('click', function(){
-								audio = document.getElementById("audio");
-								audio.play();
-							});
+							// button.addEventListener('click', function(){
+							// 	if(alarm){
+							// 		audio = document.getElementById("audio");
+							// 		audio.play();
+							// 		audio.stop();
+							// 	}
+							// });
+							// alarm = false;
 						}
 
 						if(countedDiff > 0  && counter == 0 ){
