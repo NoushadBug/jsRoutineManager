@@ -25,8 +25,9 @@
     let tableHead = document.querySelectorAll("#sample_1")[0];
     let upcomingContext = document.querySelector("#upcoming");
     let counterContext = document.querySelector("#countdown");
-    let button = document.getElementById('eventMan');
-    button.addEventListener('click', function(){
+    let alarmButton = document.getElementById('eventMan');
+    let refreshButton = document.getElementById('creater');
+    alarmButton.addEventListener('click', function(){
         alarm = true;
         alarmer(alarm);
     });
@@ -56,6 +57,7 @@
     classTime(filter(true));
 
     function reloader(){
+        //alert('afdssd');
         $.ajax({
             type: "GET",
             url: location.href,
@@ -68,6 +70,16 @@
 
     function alarmer(a){
         if(a){
+            button = alarmButton.innerHTML;
+           // alert(refreshButton.innerHTML);
+            if(refreshButton.innerHTML == '<button class="btn btn-warning mr-1 rounded font-weight-bold" id="eventMan">Set Alarm</button>')
+            {
+                alarmButton.remove();
+                refreshButton.innerHTML = '<button class="btn text-center px-3 mr-5" onclick = "location.reload();"><i class="fa fa-refresh" aria-hidden="true"></i></button>';
+            }
+            else{
+                alarmButton.remove();
+            }
             for(let i = 0; i<idArr.length; i++) {
             if(!tomorrowClicked){
                 let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(formatAMPM(new Date())));
@@ -214,7 +226,7 @@
                         tableData[idArr[i]-1].style.backgroundColor = "coral";
                         tableData[idArr[i]-1].style.fontWeight = "bold";
 
-                        button.addEventListener('click', function(){
+                        alarmButton.addEventListener('click', function(){
                             if(alarm){
                                 audio = document.getElementById("audio");
                                 audio.play();
