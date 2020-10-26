@@ -1,18 +1,3 @@
-let button = document.getElementById('eventMan');
-button.addEventListener('click', function(){
-    alarm = true;
-    alarmer(alarm);
-});
-
-    $(document).ready(function(){
-
-    $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
 
 let days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 // initiate layout and plugins
@@ -40,6 +25,21 @@ let tableData = document.querySelectorAll(".gradeX");
 let tableHead = document.querySelectorAll("#sample_1")[0];
 let upcomingContext = document.querySelector("#upcoming");
 let counterContext = document.querySelector("#countdown");
+let button = document.getElementById('eventMan');
+button.addEventListener('click', function(){
+    alarm = true;
+    alarmer(alarm);
+});
+
+    $(document).ready(function(){
+
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
 
 filter(true);
 // var x = document.getElementById("foobar");
@@ -57,10 +57,9 @@ classTime(filter(true));
 
 function alarmer(a){
     if(a){
-        let countedDiff;
         for(let i = 0; i<idArr.length; i++) {
         if(!tomorrowClicked){
-            countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(new Date()));
+            let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(formatAMPM(new Date())));
             if(countedDiff <= 0  && countedDiff >= -15 ){
                     audio = document.getElementById("audio");
                     audio.play();
