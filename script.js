@@ -27,6 +27,7 @@
     let counterContext = document.querySelector("#countdown");
     let alarmButton = document.getElementById('eventMan');
     let refreshButton = document.getElementById('creater');
+
     alarmButton.addEventListener('click', function(){
         alarm = true;
         alarmer(alarm);
@@ -48,6 +49,7 @@
     window.setInterval(function(){
         let update = new Date();
         textTitle.innerHTML = "Today is " + today + ", Time is: " + formatAMPM(update);
+        upcomingPainter();
         alarmer(alarm);
         if(tomorrowClicked) classTime(filter(false));
         if(viewClicked) viewAll(true);
@@ -154,6 +156,35 @@
         }
     }
 
+    function upcomingPainter(){
+        if(!tomorrowClicked){
+            if(diffArr.length == 0 && index == -1){
+                upcomingContext.innerText = '😁 No more class remaining today 😁';
+            }
+            else{
+                upcomingClass = courseArr[index];
+                upcomingContext.innerText = '⏰ '+upcomingClass + ', at ' + formatAMPM(upcomingClassTime)+' ⏰';
+            }
+            if(today == 'Friday'){
+                upcomingContext.innerText = '✨ Today is Jumma Mubarak. Recite Surah Kahf today ✨';
+            }
+        }
+
+        else
+        {
+            if(tomorrow == 'Friday'){
+                upcomingContext.innerText = '✨ Tomorrow is Jumma Mubarak ✨';
+            }
+        }
+        upcomingContext.classList.add("text-primary");
+        counterText = countdownTimer(upcomingClassTime);
+
+        counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
+        window.setInterval(function(){
+        blinker = blinker == ' ' ? ':': ' ';
+        counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
+        }, 1000);
+    }
 
     function classTime(arr = []) {
         viewClicked = false;
@@ -250,37 +281,11 @@
 
         upcomingClassTime = classHrMinFrmt[index];
 
-        if(!tomorrowClicked){
-            if(diffArr.length == 0 && index == -1){
-                upcomingContext.innerText = '😁 No more class remaining today 😁';
-            }
-            else{
-                upcomingClass = courseArr[index];
-                upcomingContext.innerText = '⏰ '+upcomingClass + ', at ' + formatAMPM(upcomingClassTime)+' ⏰';
-            }
-            if(today == 'Friday'){
-                upcomingContext.innerText = '✨ Today is Jumma Mubarak. Recite Surah Kahf today ✨';
-            }
-        }
-
-        else
-        {
-            if(tomorrow == 'Friday'){
-                upcomingContext.innerText = '✨ Tomorrow is Jumma Mubarak ✨';
-            }
-        }
-        upcomingContext.classList.add("text-primary");
-        counterText = countdownTimer(upcomingClassTime);
-
-        counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
-        window.setInterval(function(){
-        blinker = blinker == ' ' ? ':': ' ';
-        counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
-        }, 1000);
+        upcomingPainter();
     }
 
     function countdownTimer(upcomingClassTime){
-        let num = getDifference(upcomingClassTime,formatTwentyFour(timeNow));
+        let num = getDifference(upcomingClassTime,formatTwentyFour(formatAMPM(new Date())));
         console.log('\ngetDifference: ' + num);
         let hours = Math.floor(num / 60);
         console.log('\nhrs: ' + hours);
