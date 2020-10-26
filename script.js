@@ -63,8 +63,7 @@
         $.ajax({
             type: "GET",
             url: location.href,
-            data: infoPO,
-            success: function() {   
+            success: function() {
                 location.reload();
             }
         });
@@ -77,7 +76,7 @@
             if(refreshButton.innerHTML == '<button class="btn btn-warning mr-1 rounded font-weight-bold" id="eventMan">Set Alarm</button>')
             {
                 alarmButton.remove();
-                refreshButton.innerHTML = '<button class="btn text-center px-3 mr-5" onclick = "location.reload();"><i class="fa fa-refresh rotate-center" aria-hidden="true"></i></button>';
+                refreshButton.innerHTML = '<button class="btn text-center pl-4 pr-5 mr-3" onclick = "location.reload();"><i class="fa fa-refresh rotate-center" aria-hidden="true"></i></button>';
             }
             else{
                 alarmButton.remove();
@@ -139,6 +138,7 @@
         }
         else{
             viewClicked = false;
+            unclicked = true;
             filterClicked = true;
             document.getElementById('input').style.display = 'none';
         }
@@ -157,7 +157,8 @@
     }
 
     function upcomingPainter(){
-        if(!tomorrowClicked){
+        filterClicked = true;
+        if(filterClicked && !tomorrowClicked && !viewClicked){
             if(diffArr.length == 0 && index == -1){
                 upcomingContext.innerText = '😁 No more class remaining today 😁';
             }
@@ -178,12 +179,21 @@
         }
         upcomingContext.classList.add("text-primary");
         counterText = countdownTimer(upcomingClassTime);
+        if(counterText != undefined){
+            counterContext.style.border  = '2px solid red';
+            counterContext.style.borderRadius = "50px";
+            counterContext.style.padding = "7px";
+            counterContext.style.marginLeft = "32vw";
+            counterContext.style.marginRight = "32vw";
 
+        }
         counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
+        counterText == undefined? counterContext.style.opacity = '0' : counterContext.style.opacity = '1';
         window.setInterval(function(){
         blinker = blinker == ' ' ? ':': ' ';
         counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
-        }, 1000);
+        
+    }, 1000);
     }
 
     function classTime(arr = []) {
@@ -237,10 +247,9 @@
         let counter = 0;
             for(let i = 0; i<idArr.length; i++) {
                 let data = tableData[idArr[i]-1]["cells"][0].innerHTML;
-                
-                if(!tomorrowClicked && (data.indexOf('✔️') == -1) && (data.indexOf('⌛') == -1) && (data.indexOf('🕐') == -1)){
+                let day =tableData[idArr[i]-1]["cells"][4].innerHTML;
+                if(!tomorrowClicked && tableData[idArr[i]-1]["cells"][4].innerHTML==today && !viewClicked && (data.indexOf('✔️') == -1) && (data.indexOf('⌛') == -1) && (data.indexOf('🕐') == -1)){
                     let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(timeNow));
-                // alert(countedDiff);
 
                     if(countedDiff < -15 ){
                         tableData[idArr[i]-1]["cells"][0].innerHTML = '';
