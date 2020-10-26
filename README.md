@@ -4,9 +4,9 @@ This is my personal tool (kind of fun project) made by javascript which populate
 
 It has - 
 
-* auto filtering system by date and day
+* auto filtering system by date, time and day
 * countdowns the upcoming class time
 * you can set alarm; it will ring whenever you are running out of your classtime
 * other filtering options
 * handy tool
-* funky simple UI
+* simple funky UI
