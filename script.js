@@ -75,7 +75,7 @@
             if(refreshButton.innerHTML == '<button class="btn btn-warning mr-1 rounded font-weight-bold" id="eventMan">Set Alarm</button>')
             {
                 alarmButton.remove();
-                refreshButton.innerHTML = '<button class="btn text-center px-3 mr-5" onclick = "location.reload();"><i class="fa fa-refresh" aria-hidden="true"></i></button>';
+                refreshButton.innerHTML = '<button class="btn text-center px-3 mr-5" onclick = "location.reload();"><i class="fa fa-refresh rotate-center" aria-hidden="true"></i></button>';
             }
             else{
                 alarmButton.remove();
