@@ -12,6 +12,7 @@
     let unclicked = true;
     let danger = true;
     let alarm = false;
+    let skipped = false;
     let tomorrowClicked = false;
     let viewClicked = false;
     let filterClicked = false;
@@ -33,6 +34,7 @@
         alarmer(alarm);
     });
 
+
         $(document).ready(function(){
 
         $("#myInput").on("keyup", function() {
@@ -44,8 +46,7 @@
     });
 
     filter(true);
-    // var x = document.getElementById("foobar");
-    // x.play();
+
     window.setInterval(function(){
         let update = new Date();
         textTitle.innerHTML = "Today is " + today + ", Time is: " + formatAMPM(update);
@@ -58,18 +59,8 @@
 
     classTime(filter(true));
 
-    function reloader(){
-        //alert('afdssd');
-        $.ajax({
-            type: "GET",
-            url: location.href,
-            success: function() {
-                location.reload();
-            }
-        });
-    }
-
     function alarmer(a){
+
         if(a){
             button = alarmButton.innerHTML;
            // alert(refreshButton.innerHTML);
@@ -84,16 +75,16 @@
             for(let i = 0; i<idArr.length; i++) {
             if(!tomorrowClicked){
                 let countedDiff = getDifference(classHrMinFrmt[i], formatTwentyFour(formatAMPM(new Date())));
-                if(countedDiff <= 0  && countedDiff >= -15 ){
+                if(countedDiff <= 0  && countedDiff >= -15 && !skipped){
                         audio = document.getElementById("audio");
                         audio.play();
-                        setTimeout(function(){reloader();}, 3300);
+                        // setTimeout(function(){location.reload();}, 3300);
                     }
                 }
             }
         }
         else{
-            if(!tomorrowClicked && !viewClicked) reloader();
+            if(!tomorrowClicked && !viewClicked) location.reload();
         }
     }
 
@@ -261,17 +252,18 @@
 
                     if(countedDiff <= 0  && countedDiff >= -15 ){
                         tableData[idArr[i]-1]["cells"][0].innerHTML = '';
-                        tableData[idArr[i]-1]["cells"][0].innerHTML = data + '  🕐';
+                        tableData[idArr[i]-1]["cells"][0].innerHTML = data +'  🕐'+'<button id="skipped" onclick="skipped = true;"class="btn"><i class="fa fa-bell-slash" id="bell" style="display: block;position: relative;top: -0.3vh;"></i></button>';
                         tableData[idArr[i]-1].style.backgroundColor = "transparent";
                         tableData[idArr[i]-1].style.backgroundColor = "coral";
                         tableData[idArr[i]-1].style.fontWeight = "bold";
 
                         alarmButton.addEventListener('click', function(){
-                            if(alarm){
+                            if(alarm && !skipped){
                                 audio = document.getElementById("audio");
                                 audio.play();
                                 audio.stop();
                             }
+
                             });
                             alarm = false;
                     }
