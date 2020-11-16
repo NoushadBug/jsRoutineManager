@@ -183,7 +183,7 @@
         window.setInterval(function(){
         blinker = blinker == ' ' ? ':': ' ';
         counterContext.innerHTML = counterText.substring(0,2)+'&nbsp;'+blinker+'&nbsp;'+counterText.substring(3,7)+' hour(s) remaining';
-        document.title = counterText.substring(0,2)+' : '+counterText.substring(3,7)+' hr(s)';
+        document.title = counterText.substring(0,2)+' : '+counterText.substring(3,7)+' hr(s) ∘ '+'Routine';
     }, 1000);
     }
 
