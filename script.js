@@ -29,6 +29,29 @@
     let alarmButton = document.getElementById('eventMan');
     let refreshButton = document.getElementById('creater');
 
+
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // IE specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text); 
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
+
     alarmButton.addEventListener('click', function(){
         alarm = true;
         alarmer(alarm);
@@ -36,6 +59,31 @@
 
 
         $(document).ready(function(){
+
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+           // var link = 
+            $("a").each(function() {
+                if($(this).attr("href").indexOf('meet.google.com') > -1){
+                    $(this).prop("href", $(this).attr("href").split("?")[0]);
+                }
+            })
+
+            $("a").on("click", function(event){
+                var result;
+                var link =  $(this).attr("href");
+                    //result = (link.split()
+                if($(this).attr("href").indexOf('meet.google.com') > -1){
+                    var tempLink = link.split("?")[0];
+                    $(this).prop("href", tempLink)
+                    var myLink = $(this).attr("href").split("https://meet.google.com/")[1];
+                    result = copyToClipboard(myLink)
+                }
+                else{
+                    result = copyToClipboard($(this).attr("href"))
+                }
+                console.log(result);
+            });
+        }
 
         $("#myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
