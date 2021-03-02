@@ -60,6 +60,15 @@
 
         $(document).ready(function(){
 
+        var browserName = bowser.getParser(navigator.userAgent).getResult().browser.name;
+        if (browserName == "Microsoft Edge") {
+            $("a").each(function() {
+                var link = $(this).attr("href");
+                var updatedLink = link.split("authuser=")[0]+'authuser=3';
+                $(this).prop("href", updatedLink); 
+            })
+        }
+
         if (/Mobi|Android/i.test(navigator.userAgent)) {
            // var link = 
             $("a").each(function() {
