@@ -308,6 +308,9 @@
                     }
 
                     if(countedDiff <= 0  && countedDiff >= -15 ){
+                        
+                        var selectedTable = tableData[idArr[i]-1]["cells"][0].querySelector("a");
+                        selectedTable.click();
                         tableData[idArr[i]-1]["cells"][0].innerHTML = '';
                         tableData[idArr[i]-1]["cells"][0].innerHTML = data +'  🕐'+'<button id="skipped" onclick="skipped = true;"class="btn"><i class="fa fa-bell-slash" id="bell" style="display: block;position: relative;top: -0.3vh;"></i></button>';
                         tableData[idArr[i]-1].style.backgroundColor = "transparent";
@@ -316,6 +319,7 @@
 
                         alarmButton.addEventListener('click', function(){
                             if(alarm && !skipped){
+                                window.open(selectedTable.href, '_blank');
                                 audio = document.getElementById("audio");
                                 audio.play();
                                 audio.stop();
