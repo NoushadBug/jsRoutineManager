@@ -288,7 +288,7 @@
 
         console.log('\ndiffArr after loop: ' + diffArr);
 
-        index = classHrMinFrmt.findIndex((v) => {
+        let index = classHrMinFrmt.findIndex((v) => {
                 return v.substring(0, 2) == parseInt(formatTwentyFour(timeNow)) + diffArr[diffArr.length - 1];
         });
         console.log('\nindex: ' + index); //we got the index of the upcoming class's table row
@@ -308,9 +308,8 @@
                     }
 
                     if(countedDiff <= 0  && countedDiff >= -15 ){
-                        
                         var selectedTable = tableData[idArr[i]-1]["cells"][0].querySelector("a");
-                        selectedTable.click();
+                        setTimeout(function(){ var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
                         tableData[idArr[i]-1]["cells"][0].innerHTML = '';
                         tableData[idArr[i]-1]["cells"][0].innerHTML = data +'  🕐'+'<button id="skipped" onclick="skipped = true;"class="btn"><i class="fa fa-bell-slash" id="bell" style="display: block;position: relative;top: -0.3vh;"></i></button>';
                         tableData[idArr[i]-1].style.backgroundColor = "transparent";
@@ -319,7 +318,7 @@
 
                         alarmButton.addEventListener('click', function(){
                             if(alarm && !skipped){
-                                window.open(selectedTable.href, '_blank');
+                                //window.open(selectedTable.href, '_blank');
                                 audio = document.getElementById("audio");
                                 audio.play();
                                 audio.stop();
