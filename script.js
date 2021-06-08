@@ -319,6 +319,7 @@
 
                         alarmButton.addEventListener('click', function(){
                             if(alarm && !skipped){
+                                setTimeout(function(){ var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
                                 audio = document.getElementById("audio");
                                 audio.play();
                                 audio.stop();
