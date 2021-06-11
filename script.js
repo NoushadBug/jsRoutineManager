@@ -105,6 +105,7 @@
                         $(this).toggle()
                     });
                     $('.button').remove();
+                    $("#myInput").focus();
                 });
             }
             if($(this).val().length == 0){
