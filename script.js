@@ -195,6 +195,7 @@
         document.getElementById('input').style.display = 'block';
         upcomingContext.style.display = 'block';
         if(decision){
+            $('#myInput').focus();
             viewClicked = true;
             unclicked = false;
             filterClicked = false;
