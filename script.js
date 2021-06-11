@@ -95,6 +95,21 @@
         }
 
         $("#myInput").on("keyup", function() {
+            if(!$('.button').length){
+                var $clearButton = $('<button id="clear" class="button"><i class="fa fa-times" aria-hidden="true"></i></button>');
+                $clearButton.insertAfter($("#myInput"));
+
+                $('.button').click(function(){
+                    $("#myInput").val('');
+                    $("#tbody tr").filter(function() {
+                        $(this).toggle()
+                    });
+                    $('.button').remove();
+                });
+            }
+            if($(this).val().length == 0){
+                $('.button').remove();
+            }
             var value = $(this).val().toLowerCase();
             $("#tbody tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -119,7 +134,7 @@
     function alarmer(a){
 
         if(a){
-            button = alarmButton.innerHTML;
+            var button = alarmButton.innerHTML;
            // alert(refreshButton.innerHTML);
             if(refreshButton.innerHTML == '<button class="btn btn-warning mr-1 rounded font-weight-bold" id="eventMan">Set Alarm</button>')
             {

@@ -11,6 +11,39 @@
 	<title>Class routine</title>
 </head>
 
+<style>
+
+	.button:focus {
+		outline: 0 !important;
+	}
+
+	.buttonIn {
+		position: relative;
+	}
+
+	input {
+		margin: 0px;
+		padding: 0px;
+		width: 100%;
+		outline: none;
+		height: 30px;
+		border-radius: 5px;
+	}
+
+	.button {
+		position: absolute;
+		left: -26px;
+		z-index: 2;
+		border: none;
+		top: 4px;
+		height: 30px;
+		color: #981313;
+		background-color: transparent;
+		transform: translateX(2px);
+	}
+
+</style>
+
 <body  id="body" style="overflow-y: scroll;" class="bg-default">
 
 	<audio id="audio">
@@ -37,7 +70,7 @@
 
 					<h5 id="upcoming"> </h5>
 					<h5 id="countdown" class="bg-dark text-light" > </h5>
-					<div id="input"></div>
+					<div id="input" class="buttonIn"></div>
 
 				</div>
 				<!-- END PAGE HEADER-->
