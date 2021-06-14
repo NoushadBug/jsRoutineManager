@@ -350,7 +350,16 @@ function classTime(arr = []) {
 
                 alarmButton.addEventListener('click', function () {
                     if (alarm && !skipped) {
-                        setTimeout(function () { var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
+                        if (localStorage.getItem("currentClass") != tableData[idArr[i] - 1]["cells"][1].innerText) {
+                            localStorage.setItem("currentClass", (tableData[idArr[i] - 1]["cells"][1].innerText));
+                            if(localStorage.getItem("redirected") != 'ture'){
+                                localStorage.setItem("redirected", "true");
+                                setTimeout(function () { var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
+                            }else{
+                                localStorage.setItem("redirected", "false");
+                            }
+        
+                        }
                         audio = document.getElementById("audio");
                         audio.play();
                         audio.stop();
