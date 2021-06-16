@@ -155,7 +155,7 @@ function alarmer(a) {
                 if (countedDiff <= 0 && countedDiff >= -15 && !skipped) {
                     audio = document.getElementById("audio");
                     audio.play();
-                    // setTimeout(function(){location.reload();}, 3300);
+                    setTimeout(function(){location.reload();}, 4300);
                 }
             }
         }
@@ -257,9 +257,11 @@ function upcomingPainter() {
     }
     counterContext.innerHTML = counterText.substring(0, 2) + '&nbsp;' + blinker + '&nbsp;' + counterText.substring(3, 7) + ' hour(s) remaining';
     counterText == undefined ? counterContext.style.opacity = '0' : counterContext.style.opacity = '1';
+    //if(counterContext.innerText == '00 : 00 hour(s) remaining'){location.reload();}
     window.setInterval(function () {
         blinker = blinker == ' ' ? ':' : ' ';
         counterContext.innerHTML = counterText.substring(0, 2) + '&nbsp;' + blinker + '&nbsp;' + counterText.substring(3, 7) + ' hour(s) remaining';
+        //if(counterContext.innerText == '00 : 00 hour(s) remaining'){location.reload();}
         document.title = counterText.substring(0, 2) + ' : ' + counterText.substring(3, 7) + ' hr(s) • ' + 'Routine';
     }, 1000);
 }
@@ -358,7 +360,6 @@ function classTime(arr = []) {
                             }else{
                                 localStorage.setItem("redirected", "false");
                             }
-        
                         }
                         audio = document.getElementById("audio");
                         audio.play();
