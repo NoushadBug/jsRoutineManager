@@ -21,7 +21,7 @@ diffArr = [], classesDoneArr = [], courseArr = [], idArr = [], classHrMinFrmt = 
 let textTitle = document.getElementById("page-title");
 textTitle.innerHTML = "Today is " + today + ", Time is: " + timeNow;
 
-if(localStorage.getItem("date") != d.toDateString()){
+if (localStorage.getItem("date") != d.toDateString()) {
     localStorage.clear();
 }
 
@@ -33,6 +33,9 @@ let upcomingContext = document.querySelector("#upcoming");
 let counterContext = document.querySelector("#countdown");
 let alarmButton = document.getElementById('eventMan');
 let refreshButton = document.getElementById('creater');
+// set reminder code
+
+
 
 
 function copyToClipboard(text) {
@@ -155,7 +158,7 @@ function alarmer(a) {
                 if (countedDiff <= 0 && countedDiff >= -15 && !skipped) {
                     audio = document.getElementById("audio");
                     audio.play();
-                    setTimeout(function(){location.reload();}, 4300);
+                    setTimeout(function () { location.reload(); }, 4300);
                 }
             }
         }
@@ -334,10 +337,10 @@ function classTime(arr = []) {
 
                 if (localStorage.getItem("currentClass") != tableData[idArr[i] - 1]["cells"][1].innerText) {
                     localStorage.setItem("currentClass", (tableData[idArr[i] - 1]["cells"][1].innerText));
-                    if(localStorage.getItem("redirected") != 'ture'){
+                    if (localStorage.getItem("redirected") != 'ture') {
                         localStorage.setItem("redirected", "true");
                         setTimeout(function () { var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
-                    }else{
+                    } else {
                         localStorage.setItem("redirected", "false");
                     }
 
@@ -354,10 +357,10 @@ function classTime(arr = []) {
                     if (alarm && !skipped) {
                         if (localStorage.getItem("currentClass") != tableData[idArr[i] - 1]["cells"][1].innerText) {
                             localStorage.setItem("currentClass", (tableData[idArr[i] - 1]["cells"][1].innerText));
-                            if(localStorage.getItem("redirected") != 'ture'){
+                            if (localStorage.getItem("redirected") != 'ture') {
                                 localStorage.setItem("redirected", "true");
                                 setTimeout(function () { var win = window.open(selectedTable.href, "mypopup"); win.focus() }, 1000);
-                            }else{
+                            } else {
                                 localStorage.setItem("redirected", "false");
                             }
                         }
