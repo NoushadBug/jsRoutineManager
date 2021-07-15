@@ -70,7 +70,6 @@ let upComing = document.getElementById("upcomingNotice");
 let oldNoticeBtn = document.getElementById("toogleNotice");
 let filterBtn = document.getElementById("filterBtn");
 let RemindObj;
-var adoptData;
 
 remind.addEventListener("click", function (e) {
   e.preventDefault();
@@ -186,8 +185,8 @@ var createCards = function (decision, decision2) {
         var timeLeft = examDate.getTime() - todayDate.getTime();
         days = timeLeft / (60 * 60 * 24 * 1000);
 
-        var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 "  id="${i}">
-        div class="col-6 m-auto p-0 wrapText"><span>📝 ${element.title}</span></div><div class="col-3 m-auto p-0 "><span>🔔 ${days} day left </span></div><div class="col-3 m-auto">
+        var notificationDiv = `<div class="row col-12 reminderNotice text-left list container  ml-2 mt-2 "  id="${i}">
+        <div class="col-6 m-auto p-0 wrapText"><span>📝 ${element.title}</span></div><div class="col-3 m-auto p-0 "><span>🔔 ${days} day left </span></div><div class="col-3 m-auto">
         <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i><i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i></div></div>`;
 
         $(notificationDiv).appendTo(".wrapperNotifi");
@@ -224,7 +223,7 @@ var createCards = function (decision, decision2) {
 
       if (decision == true) {
         // old notice functionality
-        var oldNotices = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 "  id="${i}"><div class="col-5 m-auto p-0 wrapText">
+        var oldNotices = `<div class="row col-12 reminderNotice text-left list container  ml-2 mt-2 "  id="${i}"><div class="col-5 m-auto p-0 wrapText">
         <span>📝 ${element.title}</span></div><div class="col-4 m-auto p-0">
         <span>📅 ${element.date}</span></div><div class="col-3 m-auto">
         <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
@@ -296,7 +295,7 @@ var updateModal = function (clickIndex) {
   console.log(clickIndex);
   $(`<!-- Modal -->
     <div class="modal fade" id="exampleModal${clickIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header justify-content-center">
             <h5 class="modal-title" id="exampleModalLabel">✏️Edit Your Reminder✏️</h5>
@@ -397,6 +396,9 @@ $(function () {
         });
         $(".button").remove();
         $("#myInput").focus();
+        tableData.forEach(function (item) {
+          $(item).css("display", "table-row");
+        })
       });
     }
     if ($(this).val().length == 0) {
@@ -477,6 +479,8 @@ function filter(compDay) {
   if (comparedDay == "Friday") {
     tableHead.style.opacity = "0";
   } else {
+    tableData = document.querySelectorAll(".gradeX");
+    var hiddenDivCounter = 0;
     for (i = 0; i < tableData.length; i++) {
       if (tableData[i]["cells"][4].innerText == comparedDay) {
         tableHead.classList.add("show");
@@ -484,8 +488,10 @@ function filter(compDay) {
         ids.push(parseInt(tableData[i]["cells"][0].innerText) - 1);
       } else {
         tableData[i].classList.add("hide");
+        hiddenDivCounter++;
       }
     }
+    if (hiddenDivCounter == tableData.length) { document.querySelector('thead').classList.add("hide"); }
   }
   return ids;
 }
@@ -579,6 +585,7 @@ function upcomingPainter() {
 
 function classTime(arr = []) {
   viewClicked = false;
+  tableData = document.querySelectorAll(".gradeX");
   for (let j = 0; j < arr.length; j++) {
     let differ;
     classHrMinFrmt.push(
@@ -589,7 +596,7 @@ function classTime(arr = []) {
 
     if (
       parseInt(classHrMinFrmt[j].substring(0, 2)) -
-        parseInt(formatTwentyFour(timeNow).substring(0, 2)) >
+      parseInt(formatTwentyFour(timeNow).substring(0, 2)) >
       0
     ) {
       differ =
@@ -597,7 +604,7 @@ function classTime(arr = []) {
         parseInt(formatTwentyFour(timeNow).substring(0, 2));
     } else if (
       parseInt(classHrMinFrmt[j].substring(0, 2)) -
-        parseInt(formatTwentyFour(timeNow).substring(0, 2)) <
+      parseInt(formatTwentyFour(timeNow).substring(0, 2)) <
       0
     ) {
       differ =
@@ -618,7 +625,7 @@ function classTime(arr = []) {
               timeNow.length - 2
             )
           ) >
-        0
+          0
           ? 0
           : -22;
     }
@@ -648,7 +655,7 @@ function classTime(arr = []) {
     );
   });
 
-  // console.log('\nindex: ' + index); //we got the index of the upcoming class's table row
+  //we got the index of the upcoming class's table row
   let counter = 0;
   for (let i = 0; i < idArr.length; i++) {
     let data = tableData[idArr[i] - 1]["cells"][0].innerHTML;

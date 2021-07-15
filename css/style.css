@@ -32,12 +32,26 @@ input {
   animation: rotate-center 1s linear infinite forwards;
 }
 
+.nav-link:active,
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:visited {
+  background: linear-gradient(45deg, black, transparent);
+  color: white !important;
+}
+
+.nav-link:active i,
+.nav-link:hover i,
+.nav-link:focus i {
+  color: rgb(53 134 218 / 96%) !important;
+}
+
 .show {
   opacity: 1;
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 /* CLASSES TO MAKE MODAL WORK */
@@ -99,7 +113,7 @@ input {
   /* overflow: auto; */
   border-radius: 1em;
   background: #DBDBDA;
-  height: 45vh;
+  height: 30vh;
 }
 
 .wrapperExam {
@@ -115,14 +129,19 @@ input {
 
 .examRemind,
 .reminderNotice {
-  border-radius: 2em;
+  border-radius: 1em;
+  width: 98% !important;
   right: 1vh;
   overflow-y: hidden;
   overflow: auto;
   background: white;
-  height: 7vh;
+  height: 5vh;
   top: 1vh;
   cursor: pointer;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  -ms-border-radius: 1em;
+  -o-border-radius: 1em;
 }
 
 .wrapText {
