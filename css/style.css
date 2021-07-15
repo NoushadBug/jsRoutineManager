@@ -98,7 +98,7 @@ input {
   overflow-x: hidden;
   /* overflow: auto; */
   border-radius: 1em;
-  background: #aee5ff;
+  background: #DBDBDA;
   height: 45vh;
 }
 
@@ -110,7 +110,7 @@ input {
 
   border-radius: 1rem;
 
-  background-color: #0f3369;
+  background-color: #DBDBDA;
 }
 
 .examRemind,
@@ -119,7 +119,7 @@ input {
   right: 1vh;
   overflow-y: hidden;
   overflow: auto;
-  background: ivory;
+  background: whitesmoke;
   height: 7vh;
   top: 1vh;
   cursor: pointer;
@@ -190,5 +190,5 @@ input {
     flex: 0 0 auto !important;
     width: 100% !important;
 
-}
+  }
 }
