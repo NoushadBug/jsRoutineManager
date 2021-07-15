@@ -39,6 +39,7 @@ input {
 .hide {
   display: none;
 }
+
 /* CLASSES TO MAKE MODAL WORK */
 .hideModal {
   display: none;
@@ -56,8 +57,8 @@ input {
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
-.confirmModal
-{
+
+.confirmModal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -100,20 +101,20 @@ input {
   background: #aee5ff;
   height: 45vh;
 }
-.wrapperExam
-{
-  
-overflow-x: hidden;
-  
-height: 20vh;
-  
-border-radius: 1rem;
-  
-background-color: #0f3369;
+
+.wrapperExam {
+
+  overflow-x: hidden;
+
+  height: 20vh;
+
+  border-radius: 1rem;
+
+  background-color: #0f3369;
 }
 
-.examRemind,.reminderNotice
-{
+.examRemind,
+.reminderNotice {
   border-radius: 2em;
   right: 1vh;
   overflow-y: hidden;
@@ -123,18 +124,18 @@ background-color: #0f3369;
   top: 1vh;
   cursor: pointer;
 }
-.wrapText
-{
+
+.wrapText {
   word-break: break-all;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
+
 }
-.clear
-{
- 
+
+.clear {
+
   border-radius: 2em;
   text-align: center;
   background: darkturquoise;
@@ -160,6 +161,7 @@ background-color: #0f3369;
     -webkit-transform: rotate(0);
     transform: rotate(0);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -168,11 +170,13 @@ background-color: #0f3369;
     -o-transform: rotate(360deg);
   }
 }
+
 @keyframes rotate-center {
   0% {
     -webkit-transform: rotate(0);
     transform: rotate(0);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -180,38 +184,11 @@ background-color: #0f3369;
 }
 
 @media screen and (max-width: 1140px) {
-  .noticeDiv,.tableDiv
-  {
+
+  .noticeDiv,
+  .tableDiv {
     flex: 0 0 auto !important;
     width: 100% !important;
 
-  }
 }
-.button:focus {
-  outline: 0 !important;
-}
-
-.buttonIn {
-  position: relative;
-}
-
-input {
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  outline: none;
-  height: 30px;
-  border-radius: 5px;
-}
-
-.button {
-  position: absolute;
-  left: -26px;
-  z-index: 2;
-  border: none;
-  top: 4px;
-  height: 30px;
-  color: #981313;
-  background-color: transparent;
-  transform: translateX(2px);
 }
