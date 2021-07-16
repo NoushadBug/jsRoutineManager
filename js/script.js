@@ -104,6 +104,22 @@ noBtn.addEventListener("click", function (e) {
   overlay.classList.add("hideModal");
 });
 
+// colorize table while filtering
+function colorizeTable() {
+  tableData = document.querySelectorAll(".gradeX");
+  var i = 0;
+  tableData.forEach(function (item) {
+    if (item.style.display != "none") {
+      if (i % 2 == 0) { item.style.background = "#E6E6E6" }
+      else {
+        item.style.background = "white"
+      }
+      i++;
+    }
+  });
+  console.log('test')
+}
+
 // delete Modal functionality
 var deleteModal = function (deleteIndex) {
   // confirmation modal
@@ -407,6 +423,7 @@ $(function () {
     var value = $(this).val().toLowerCase();
     $("#tbody tr").filter(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      colorizeTable()
     });
   });
 

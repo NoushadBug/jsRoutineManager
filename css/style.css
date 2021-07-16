@@ -112,7 +112,7 @@ input {
   overflow-x: hidden;
   /* overflow: auto; */
   border-radius: 1em;
-  background: #DBDBDA;
+  background: #E6E6E6;
   height: 30vh;
 }
 
@@ -124,7 +124,7 @@ input {
 
   border-radius: 1rem;
 
-  background-color: #DBDBDA;
+  background-color: #E6E6E6;
 }
 
 .examRemind,
