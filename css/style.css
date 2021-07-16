@@ -116,6 +116,10 @@ input {
   height: 30vh;
 }
 
+#myInput {
+  border-radius: 1em;
+}
+
 .wrapperExam {
 
   overflow-x: hidden;
@@ -125,6 +129,56 @@ input {
   border-radius: 1rem;
 
   background-color: #E6E6E6;
+}
+
+table {
+
+  border-radius: 1.5em;
+  -moz-border-radius: 6px;
+
+}
+
+tr:hover,
+tr:hover a {
+  background-color: #c1d2f1 !important;
+  color: #123b4e !important;
+}
+
+
+
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+td {
+  border: solid 1px #000;
+  border-style: none solid solid none;
+  padding: 10px;
+}
+
+tr:first-child th:first-child {
+  border-top-left-radius: 1.5em !important;
+}
+
+tr:first-child th:last-child {
+  border-top-right-radius: 1.5em !important;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 1.5em !important;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 1.5em !important;
+}
+
+tr:first-child td {
+  border-top-style: solid !important;
+}
+
+tr td:first-child {
+  border-left-style: solid !important;
 }
 
 .examRemind,

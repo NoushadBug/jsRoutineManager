@@ -112,7 +112,7 @@ function colorizeTable() {
     if (item.style.display != "none") {
       if (i % 2 == 0) { item.style.background = "#E6E6E6" }
       else {
-        item.style.background = "white"
+        item.style.background = "transparent"
       }
       i++;
     }
@@ -203,7 +203,7 @@ var createCards = function (decision, decision2) {
 
         var notificationDiv = `<div class="row col-12 reminderNotice text-left list container  ml-2 mt-2 "  id="${i}">
         <div class="col-6 m-auto p-0 wrapText"><span>📝 ${element.title}</span></div><div class="col-3 m-auto p-0 "><span>🔔 ${days} day left </span></div><div class="col-3 m-auto">
-        <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i><i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i></div></div>`;
+        <i class="fa fa-trash-o px-2" onclick = deleteModal(${i})></i><i class="fa fa-pencil px-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i></div></div>`;
 
         $(notificationDiv).appendTo(".wrapperNotifi");
 
@@ -415,6 +415,7 @@ $(function () {
         tableData.forEach(function (item) {
           $(item).css("display", "table-row");
         })
+        colorizeTable()
       });
     }
     if ($(this).val().length == 0) {
@@ -484,6 +485,8 @@ window.setInterval(function () {
 classTime(filter(true));
 
 function filter(compDay) {
+  $(".tableDiv h5").remove();
+  document.querySelector('thead').classList.remove("hide");
   viewClicked = false;
   filterClicked = true;
   viewAll(false);
@@ -508,12 +511,19 @@ function filter(compDay) {
         hiddenDivCounter++;
       }
     }
-    if (hiddenDivCounter == tableData.length) { document.querySelector('thead').classList.add("hide"); }
+    if (hiddenDivCounter == tableData.length) {
+      var infoText = `<h5 class="text-center">🎉 no class availabe 🎉</h5>`;
+      $(infoText).prependTo(".tableDiv");
+      document.querySelector('thead').classList.add("hide");
+    }
+
   }
   return ids;
 }
 
 function viewAll(decision) {
+  $(".tableDiv h5").remove();
+  document.querySelector('thead').classList.remove("hide");
   tomorrowClicked = false;
   tableHead.style.opacity = "1";
   document.getElementById("input").style.display = "block";
