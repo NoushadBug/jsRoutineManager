@@ -47,9 +47,15 @@ input {
   color: white !important;
 }
 
+
 .nav-link:active i,
 .nav-link:hover i,
-.nav-link:focus i {
+.nav-link:focus i,
+.clickedBtn i {
+  color: rgb(53 134 218 / 96%) !important;
+}
+
+  {
   color: rgb(53 134 218 / 96%) !important;
 }
 
