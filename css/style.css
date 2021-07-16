@@ -1,3 +1,7 @@
+body {
+  font-family: cursive !important;
+}
+
 .button:focus {
   outline: 0 !important;
 }
@@ -189,7 +193,7 @@ tr td:first-child {
   overflow-y: hidden;
   overflow: auto;
   background: white;
-  height: 5vh;
+  height: 6vh;
   top: 1vh;
   cursor: pointer;
   -webkit-border-radius: 1em;

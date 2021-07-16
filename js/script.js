@@ -202,7 +202,7 @@ var createCards = function (decision, decision2) {
         days = timeLeft / (60 * 60 * 24 * 1000);
 
         var notificationDiv = `<div class="row col-12 reminderNotice text-left list container  ml-2 mt-2 "  id="${i}">
-        <div class="col-6 m-auto p-0 wrapText"><span>📝 ${element.title}</span></div><div class="col-3 m-auto p-0 "><span>🔔 ${days} day left </span></div><div class="col-3 m-auto">
+        <div class="col-6 m-auto p-0 wrapText"><span>📝 ${element.title}</span></div><div class="col-3 m-auto p-0 "><span>🔔 ${days} day(s) left </span></div><div class="col-3 m-auto">
         <i class="fa fa-trash-o px-2" onclick = deleteModal(${i})></i><i class="fa fa-pencil px-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i></div></div>`;
 
         $(notificationDiv).appendTo(".wrapperNotifi");
