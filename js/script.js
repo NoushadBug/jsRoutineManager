@@ -305,6 +305,14 @@ function tConvert(time) {
   }
   return time.join(""); // return adjusted time or original string
 }
+
+// stylize Clicked Btn
+$('.nav-link').click(
+  function () {
+    $('.nav-link').removeClass('clickedBtn');
+    $(this).addClass('clickedBtn');
+  })
+
 var updateModal = function (clickIndex) {
   adoptData = JSON.parse(localStorage.getItem("reminderList"));
 

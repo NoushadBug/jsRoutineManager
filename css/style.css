@@ -41,8 +41,9 @@ input {
 .nav-link:active,
 .nav-link:hover,
 .nav-link:focus,
-.nav-link:visited {
-  background: linear-gradient(45deg, black, transparent);
+.nav-link:visited,
+.clickedBtn {
+  background: linear-gradient(45deg, black, transparent) !important;
   color: white !important;
 }
 
