@@ -528,6 +528,16 @@ function viewAll(decision) {
     document.getElementById('sample_1').style.height = '51.8vh';
 
   } else {
+    $('#myInput').val('');
+    $('#tbody tr').filter(function () {
+      $(this).toggle();
+    });
+    $('.button').remove();
+    $('#myInput').focus();
+    tableData.forEach(function (item) {
+      $(item).css('display', 'table-row');
+    });
+    colorizeTable();
     viewClicked = false;
     unclicked = true;
     filterClicked = true;
