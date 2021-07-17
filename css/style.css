@@ -54,10 +54,6 @@ input {
   color: rgb(53 134 218 / 96%) !important;
 }
 
- {
-  color: rgb(53 134 218 / 96%) !important;
-}
-
 .show {
   opacity: 1;
 }
@@ -144,6 +140,15 @@ input {
 table {
   border-radius: 1.5em;
   -moz-border-radius: 6px;
+
+  vertical-align: middle;
+}
+
+.table-bordered td,
+.table-bordered th,
+.table-bordered thead th {
+  vertical-align: middle;
+  text-align: -webkit-center;
 }
 
 tr:hover,
@@ -259,6 +264,7 @@ tr td:first-child {
 }
 
 @media screen and (max-width: 1255px) {
+
   .noticeDiv,
   .tableDiv {
     flex: 0 0 auto !important;

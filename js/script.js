@@ -476,7 +476,8 @@ classTime(filter(true));
 
 function filter(compDay) {
   $('.tableDiv h5').remove();
-  document.querySelector('thead').classList.remove('hide');
+  document.querySelector('table').classList.remove('d-none');
+
   viewClicked = false;
   filterClicked = true;
   viewAll(false);
@@ -504,7 +505,7 @@ function filter(compDay) {
     if (hiddenDivCounter == tableData.length) {
       var infoText = `<h5 class="text-center">🎉 no class availabe 🎉</h5>`;
       $(infoText).prependTo('.tableDiv');
-      document.querySelector('thead').classList.add('hide');
+      document.querySelector('table').classList.add('d-none');
     }
   }
   return ids;
@@ -512,7 +513,8 @@ function filter(compDay) {
 
 function viewAll(decision) {
   $('.tableDiv h5').remove();
-  document.querySelector('thead').classList.remove('hide');
+  // BUG
+  document.querySelector('table').classList.remove('d-none');
   tomorrowClicked = false;
   tableHead.style.opacity = '1';
   document.getElementById('input').style.display = 'block';
@@ -523,11 +525,15 @@ function viewAll(decision) {
     unclicked = false;
     filterClicked = false;
     upcomingContext.style.display = 'none';
+    document.getElementById('sample_1').style.height = '51.8vh';
+
   } else {
     viewClicked = false;
     unclicked = true;
     filterClicked = true;
     document.getElementById('input').style.display = 'none';
+    document.getElementById('sample_1').style.height = '59.1vh';
+
   }
   if (document.getElementById('input').innerHTML == '') {
     var x = document.createElement('INPUT');
