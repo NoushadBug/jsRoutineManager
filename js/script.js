@@ -1,5 +1,6 @@
 var adoptData = JSON.parse(localStorage.getItem('reminderList'));
-
+var filteredGoldRowList = [];
+var filteredCobalRowList = [];
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 // initiate layout and plugins
 let d = new Date();
@@ -97,21 +98,37 @@ noBtn.addEventListener('click', function (e) {
 });
 
 // colorize table while filtering
-function colorizeTable() {
+function colorizeTable(mode) {
   tableData = document.querySelectorAll('.gradeX');
-  var i = 0;
-  tableData.forEach(function (item) {
-    if (item.style.display != 'none') {
-      if (i % 2 == 0) {
+  tableData[6].style.background = 'transparent';
+  var rowCounter = 0;
+  tableData.forEach(function (item, i) {
+    if (item.style.backgroundColor == 'gold') { filteredGoldRowList.push(i) }
+    if (item.style.backgroundColor == 'cobal') { filteredCobalRowList.push(i) }
+    if (item.style.display != 'none' && !item.classList.contains("hide")) {
+      if (rowCounter % 2 == 0) {
         item.style.background = '#E6E6E6';
       } else {
         item.style.background = 'transparent';
       }
-      i++;
+      rowCounter++;
     }
   });
+
+  if (mode == 'filter') {
+    filteredGoldRowList = $.grep(filteredGoldRowList, function (v, k) {
+      return $.inArray(v, filteredGoldRowList) === k;
+    });
+    filteredCobalRowList = $.grep(filteredCobalRowList, function (v, k) {
+      return $.inArray(v, filteredCobalRowList) === k;
+    });
+    filteredGoldRowList.forEach(item => tableData[item].style.backgroundColor = 'gold');
+    filteredCobalRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
+  }
   console.log('test');
 }
+
+
 
 // delete Modal functionality
 var deleteModal = function (deleteIndex) {
@@ -409,7 +426,7 @@ $(function () {
         tableData.forEach(function (item) {
           $(item).css('display', 'table-row');
         });
-        colorizeTable();
+        colorizeTable('unfilter');
       });
     }
     if ($(this).val().length == 0) {
@@ -418,7 +435,7 @@ $(function () {
     var value = $(this).val().toLowerCase();
     $('#tbody tr').filter(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-      colorizeTable();
+      colorizeTable('unfilter');
     });
   });
 
@@ -461,18 +478,16 @@ function copyToClipboard(text) {
   }
 }
 
-filter(true);
 
 window.setInterval(function () {
   let update = new Date();
   textTitle.innerHTML = 'Today is ' + today + ', Time is: ' + formatAMPM(update);
   upcomingPainter();
-  alarmer(alarm);
   if (tomorrowClicked) classTime(filter(false));
   if (viewClicked) viewAll(true);
 }, 5000);
 
-classTime(filter(true));
+// classTime(filter(true));
 
 function filter(compDay) {
   $('.tableDiv h5').remove();
@@ -486,7 +501,6 @@ function filter(compDay) {
   compDay == true ? (comparedDay = today) : (comparedDay = tomorrow);
   compDay == true ? (unclicked = true) : (unclicked = false);
   compDay == false ? (tomorrowClicked = true) : (tomorrowClicked = false);
-
   if (comparedDay == 'Friday') {
     tableHead.style.opacity = '0';
   } else {
@@ -520,13 +534,13 @@ function viewAll(decision) {
   document.getElementById('input').style.display = 'block';
   upcomingContext.style.display = 'block';
   if (decision) {
+    colorizeTable('unfilter');
     $('#myInput').focus();
     viewClicked = true;
     unclicked = false;
     filterClicked = false;
     upcomingContext.style.display = 'none';
     document.getElementById('sample_1').style.height = '51.8vh';
-
   } else {
     $('#myInput').val('');
     $('#tbody tr').filter(function () {
@@ -537,7 +551,8 @@ function viewAll(decision) {
     tableData.forEach(function (item) {
       $(item).css('display', 'table-row');
     });
-    colorizeTable();
+    colorizeTable('filter');
+    //colorizeTable();
     viewClicked = false;
     unclicked = true;
     filterClicked = true;
@@ -613,6 +628,8 @@ function upcomingPainter() {
 }
 
 function classTime(arr = []) {
+
+
   viewClicked = false;
   tableData = document.querySelectorAll('.gradeX');
   for (let j = 0; j < arr.length; j++) {
