@@ -99,6 +99,7 @@ noBtn.addEventListener('click', function (e) {
 
 // colorize table while filtering
 function colorizeTable(mode) {
+  console.log('asdasd')
   tableData = document.querySelectorAll('.gradeX');
   tableData[6].style.background = 'transparent';
   var rowCounter = 0;
@@ -487,7 +488,7 @@ window.setInterval(function () {
   if (viewClicked) viewAll(true);
 }, 5000);
 
-// classTime(filter(true));
+classTime(filter(true));
 
 function filter(compDay) {
   $('.tableDiv h5').remove();
@@ -528,6 +529,7 @@ function filter(compDay) {
 function viewAll(decision) {
   $('.tableDiv h5').remove();
   // BUG
+  colorizeTable('unfilter');
   document.querySelector('table').classList.remove('d-none');
   tomorrowClicked = false;
   tableHead.style.opacity = '1';
@@ -680,7 +682,7 @@ function classTime(arr = []) {
   //we got the index of the upcoming class's table row
   let counter = 0;
   for (let i = 0; i < idArr.length; i++) {
-    let data = tableData[idArr[i] - 1]['cells'][0].innerHTML;
+    let data = tableData[idArr[i] - 1] == undefined ? undefined : tableData[idArr[i] - 1]['cells'][0].innerHTML;
     if (
       !tomorrowClicked &&
       tableData[idArr[i] - 1]['cells'][4].innerHTML == today &&
