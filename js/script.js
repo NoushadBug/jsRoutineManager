@@ -126,7 +126,12 @@ function colorizeTable(mode) {
     filteredGoldRowList.forEach(item => tableData[item].style.backgroundColor = 'gold');
     filteredCobalRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
   }
-  console.log('test');
+  console.log('test')
+  $('table tbody tr td').removeClass("lastLeftRow")
+  $('table tbody tr td').removeClass("lastRightRow")
+  var visibleRows = Array.prototype.slice.call($('table tbody tr'), 0).filter(rows => !rows.classList.contains("hide"));
+  visibleRows[visibleRows.length - 1].children[0].classList.add("lastLeftRow");
+  visibleRows[visibleRows.length - 1].children[visibleRows[visibleRows.length - 1].children.length - 1].classList.add("lastRightRow");
 }
 
 
