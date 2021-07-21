@@ -127,14 +127,15 @@ function colorizeTable(mode) {
     filteredCobalRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
   }
   console.log('test')
+}
+
+function tableBorderSetup() {
   $('table tbody tr td').removeClass("lastLeftRow")
   $('table tbody tr td').removeClass("lastRightRow")
   var visibleRows = Array.prototype.slice.call($('table tbody tr'), 0).filter(rows => !rows.classList.contains("hide"));
   visibleRows[visibleRows.length - 1].children[0].classList.add("lastLeftRow");
   visibleRows[visibleRows.length - 1].children[visibleRows[visibleRows.length - 1].children.length - 1].classList.add("lastRightRow");
 }
-
-
 
 // delete Modal functionality
 var deleteModal = function (deleteIndex) {
@@ -579,6 +580,7 @@ function viewAll(decision) {
   for (i = 0; i < tableData.length; i++) {
     tableData[i].classList.remove('hide');
   }
+  tableBorderSetup();
 }
 
 function upcomingPainter() {
@@ -635,8 +637,7 @@ function upcomingPainter() {
 }
 
 function classTime(arr = []) {
-
-
+  tableBorderSetup();
   viewClicked = false;
   tableData = document.querySelectorAll('.gradeX');
   for (let j = 0; j < arr.length; j++) {
@@ -745,6 +746,7 @@ function classTime(arr = []) {
 
   upcomingClassTime = classHrMinFrmt[index];
   upcomingPainter();
+
 }
 
 function countdownTimer(upcomingClassTime) {
