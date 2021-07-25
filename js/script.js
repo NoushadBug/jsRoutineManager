@@ -279,28 +279,32 @@ var createCards = function (decision, decision2) {
 submitBtn.addEventListener('click', function (e) {
   e.preventDefault();
   // at first check if localstorage has any data or not
-  adoptData = JSON.parse(localStorage.getItem('reminderList'));
-  RemindObj = {
-    title: remindTitle.value,
-    date: remindDate.value,
-    time: remindTime.value,
-    desc: remindDesc.value,
-    notify: remindNum.value,
-  };
+  if (remindTitle.value != '' || remindDate.value != '') {
+    adoptData = JSON.parse(localStorage.getItem('reminderList'));
+    RemindObj = {
+      title: remindTitle.value,
+      date: remindDate.value,
+      time: remindTime.value,
+      desc: remindDesc.value,
+      notify: remindNum.value,
+    };
 
-  // if data is available then we will create another object and oush it to array then set the whole array to localstorage
-  if (adoptData) {
-    console.log('first condition');
-    // adopdata is a array of object here
+    // if data is available then we will create another object and oush it to array then set the whole array to localstorage
+    if (adoptData) {
+      console.log('first condition');
+      // adopdata is a array of object here
 
-    adoptData.push(RemindObj);
-    localStorage.setItem('reminderList', JSON.stringify(adoptData));
-  } else {
-    // if not then also same functionality
-    console.log('second condition');
-    localStorage.setItem('reminderList', JSON.stringify([RemindObj]));
+      adoptData.push(RemindObj);
+      localStorage.setItem('reminderList', JSON.stringify(adoptData));
+    } else {
+      // if not then also same functionality
+      console.log('second condition');
+      localStorage.setItem('reminderList', JSON.stringify([RemindObj]));
+    }
+
+
+    createCards(false, false);
   }
-
   modaldiv.classList.add('hideModal');
   overlay.classList.add('hideModal');
   remindTitle.value = '';
@@ -308,7 +312,7 @@ submitBtn.addEventListener('click', function (e) {
   remindTime.value = '';
   remindDesc.value = '';
   remindNum.value = '';
-  createCards(false, false);
+
 });
 
 // test
