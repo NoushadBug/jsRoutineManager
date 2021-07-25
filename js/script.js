@@ -631,6 +631,10 @@ function upcomingPainter() {
         counterText.substring(3, 7) +
         ' hour(s) remaining';
       document.title = counterText.substring(0, 2) + ' : ' + counterText.substring(3, 7) + ' hr(s) • ' + 'Routine';
+      if (counterText == '00:00') {
+        location.reload();
+      }
+      // if (counter === '00:00') { classTime(filter(true)) }
     }, 1000);
   }
 
@@ -708,6 +712,7 @@ function classTime(arr = []) {
       }
 
       if (countedDiff <= 0 && countedDiff >= -15) {
+        //BUG
         var selectedTable = tableData[idArr[i] - 1]['cells'][0].querySelector('a');
 
         if (localStorage.getItem('currentClass') != tableData[idArr[i] - 1]['cells'][1].innerText) {
