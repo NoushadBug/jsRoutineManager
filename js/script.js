@@ -77,6 +77,12 @@ closeBtn.addEventListener('click', function (e) {
   overlay.classList.add('hideModal');
 });
 
+$('body').click(function (event) {
+  if (!$(event.target).closest('#remind').length && !$(event.target).closest('#modalDiv').length && !$(event.target).is('#modalDiv')) {
+    modaldiv.classList.add('hideModal');
+    overlay.classList.add('hideModal');
+  }
+});
 // reset all
 var resetAll = function () {
   localStorage.setItem('reminderList', '[]');
