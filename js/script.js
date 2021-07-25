@@ -1,6 +1,6 @@
 var adoptData = JSON.parse(localStorage.getItem('reminderList'));
 var filteredGoldRowList = [];
-var filteredCobalRowList = [];
+var filteredcoralRowList = [];
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 // initiate layout and plugins
 let d = new Date();
@@ -105,7 +105,7 @@ function colorizeTable(mode) {
   var rowCounter = 0;
   tableData.forEach(function (item, i) {
     if (item.style.backgroundColor == 'gold') { filteredGoldRowList.push(i) }
-    if (item.style.backgroundColor == 'cobal') { filteredCobalRowList.push(i) }
+    if (item.style.backgroundColor == 'coral') { filteredcoralRowList.push(i) }
     if (item.style.display != 'none' && !item.classList.contains("hide")) {
       if (rowCounter % 2 == 0) {
         item.style.background = '#E6E6E6';
@@ -120,11 +120,11 @@ function colorizeTable(mode) {
     filteredGoldRowList = $.grep(filteredGoldRowList, function (v, k) {
       return $.inArray(v, filteredGoldRowList) === k;
     });
-    filteredCobalRowList = $.grep(filteredCobalRowList, function (v, k) {
-      return $.inArray(v, filteredCobalRowList) === k;
+    filteredcoralRowList = $.grep(filteredcoralRowList, function (v, k) {
+      return $.inArray(v, filteredcoralRowList) === k;
     });
     filteredGoldRowList.forEach(item => tableData[item].style.backgroundColor = 'gold');
-    filteredCobalRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
+    filteredcoralRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
   }
   console.log('test')
 }
