@@ -107,7 +107,7 @@ noBtn.addEventListener('click', function (e) {
 function colorizeTable(mode) {
   console.log('asdasd')
   tableData = document.querySelectorAll('.gradeX');
-  tableData[6].style.background = 'transparent';
+  // tableData[6].style.background = 'transparent';
   var rowCounter = 0;
   tableData.forEach(function (item, i) {
     if (item.style.backgroundColor == 'gold') { filteredGoldRowList.push(i) }
