@@ -277,3 +277,35 @@ tr td:first-child {
     width: 100% !important;
   }
 }
+
+.daysLeft1 {
+  border: 3px solid rgb(228 13 13);
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+}
+
+.daysLeft2 {
+  border: 3px solid rgb(255, 115, 0);
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: none;
+  border-left-style: solid;
+}
+
+.daysLeft3 {
+  border: 3px solid rgb(120, 151, 238);
+  border-top-style: solid;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: solid;
+}
+
+.daysLeft4 {
+  border: 3px ​solid rgb(53 144 160);
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: solid;
+}

@@ -219,7 +219,7 @@ var createCards = function (decision, decision2) {
 
         var timeLeft = examDate.getTime() - todayDate.getTime();
         mydays = timeLeft / (60 * 60 * 24 * 1000);
-        var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 "  id="${i}">
+        var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 daysLeft${mydays}"  id="${i}">
 
                 <div class="col-6 m-auto p-0 wrapText text-left">
                 <span>📝 ${element.title}</span>
@@ -389,7 +389,7 @@ var updateModal = function (clickIndex) {
       date: document.querySelector(`#exampleModal${clickIndex} #date`).value,
       time: document.querySelector(`#exampleModal${clickIndex} #time`).value,
       desc: document.querySelector(`#exampleModal${clickIndex} #description`).value,
-      notify: document.querySelector(`#exampleModal${clickIndex} #number`).value,
+      notify: document.querySelector(`#exampleModal${clickIndex} #number`).value == '' ? setAutoRemindDays(document.querySelector(`#exampleModal${clickIndex} #date`).value) : document.querySelector(`#exampleModal${clickIndex} #number`).value,
     };
     adoptData[clickIndex] = RemindObj;
     console.log(RemindObj);
