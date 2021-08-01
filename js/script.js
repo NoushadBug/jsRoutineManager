@@ -276,6 +276,8 @@ var createCards = function (decision, decision2) {
 
     // old notice delete functionality
   });
+  var x = $('.reminderNotice');
+  $('.wrapperNotifi').append(Array.from(x).reverse());
 };
 
 function setAutoRemindDays(examDate) {
