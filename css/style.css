@@ -279,7 +279,7 @@ tr td:first-child {
 }
 
 .daysLeft1 {
-  border: 3px solid rgb(228 13 13) !important;
+  border: 3px solid rgb(228 13 13);
   border-top-style: solid;
   border-right-style: solid;
   border-bottom-style: solid;
@@ -287,7 +287,7 @@ tr td:first-child {
 }
 
 .daysLeft2 {
-  border: 3px solid rgb(255, 115, 0) !important;
+  border: 3px solid rgb(255, 115, 0);
   border-top-style: solid;
   border-right-style: solid;
   border-bottom-style: none;
@@ -295,7 +295,7 @@ tr td:first-child {
 }
 
 .daysLeft3 {
-  border: 3px solid rgb(120, 151, 238) !important;
+  border: 3px solid rgb(120, 151, 238);
   border-top-style: solid;
   border-right-style: none;
   border-bottom-style: none;
