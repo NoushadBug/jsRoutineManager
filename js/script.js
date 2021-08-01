@@ -176,6 +176,7 @@ var createCards = function (decision, decision2) {
 
   $('.wrapperNotifi').empty();
   $('.wrapperExam').empty();
+
   if (decision2 == true) {
     $('#clearAll').removeClass('hideModal');
 
@@ -193,6 +194,7 @@ var createCards = function (decision, decision2) {
     console.log(!params);
     $('#oldNoticebtn').attr('onclick', `createCards(${params == 'true' ? 'false' : 'true'}, true)`);
   }
+
   adoptData = JSON.parse(localStorage.getItem('reminderList'));
 
   adoptData.forEach(function (element, i) {
@@ -254,7 +256,7 @@ var createCards = function (decision, decision2) {
     }
 
     if (
-      todayDate.getTime() != examDate.getTime() &&
+      todayDate.getTime() > examDate.getTime() &&
       !(todayDate.getTime() >= notifDate && todayDate.getTime() < examDate.getTime())
     ) {
       oldNoticeIds.push(i);
@@ -276,6 +278,11 @@ var createCards = function (decision, decision2) {
   });
 };
 
+function setAutoRemindDays(examDate) {
+  var dateDifference = new Date(examDate).getTime() - todayDate.getTime();
+  return dateDifference > 0 ? (dateDifference / (1000 * 3600 * 24)).toString() : '';
+}
+
 submitBtn.addEventListener('click', function (e) {
   e.preventDefault();
   // at first check if localstorage has any data or not
@@ -286,7 +293,7 @@ submitBtn.addEventListener('click', function (e) {
       date: remindDate.value,
       time: remindTime.value,
       desc: remindDesc.value,
-      notify: remindNum.value,
+      notify: remindNum.value == '' ? setAutoRemindDays(remindDate.value) : remindNum.value,
     };
 
     // if data is available then we will create another object and oush it to array then set the whole array to localstorage
