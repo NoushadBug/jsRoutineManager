@@ -196,14 +196,13 @@ var createCards = function (decision, decision2) {
   }
 
   adoptData = JSON.parse(localStorage.getItem('reminderList'));
-
+  console.log(adoptData);
   adoptData.forEach(function (element, i) {
     console.log(i);
     // object array er examdate gula re date object e convert from string
     var examDate = new Date(element.date);
     // current date object subtract to notify date
     var notifDate = new Date(examDate.getTime());
-
     notifDate = notifDate.setDate(notifDate.getDate() - element.notify);
 
     // format the string time to 12 hour Am/pm time
@@ -218,14 +217,14 @@ var createCards = function (decision, decision2) {
         oldNoticeBtn.textContent = 'Old Notices';
 
         var timeLeft = examDate.getTime() - todayDate.getTime();
-        mydays = timeLeft / (60 * 60 * 24 * 1000);
-        var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 daysLeft${mydays}"  id="${i}">
+        var mydays = timeLeft / (60 * 60 * 24 * 1000);
+        var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 daysLeft${mydays}" data-days='${mydays}'  id="${i}">
 
                 <div class="col-6 m-auto p-0 wrapText text-left">
                 <span>📝 ${element.title}</span>
                 </div>
                 <div class="col-3 m-auto p-0 ">
-                <span>🔔 ${mydays} day left </span>
+                <span>🔔 <span class="dayNumber">${mydays}</span> day left </span>
                 </div>
                 <div class="col-3 m-auto">
                 <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
@@ -276,8 +275,12 @@ var createCards = function (decision, decision2) {
 
     // old notice delete functionality
   });
-  var x = $('.reminderNotice');
-  $('.wrapperNotifi').append(Array.from(x).reverse());
+
+  $('.wrapperNotifi').find('.reminderNotice').sort(function (a, b) {
+    var contentA = parseInt($(a).attr('data-days'));
+    var contentB = parseInt($(b).attr('data-days'));
+    return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+  }).appendTo('.wrapperNotifi');
 };
 
 function setAutoRemindDays(examDate) {
