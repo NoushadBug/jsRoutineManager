@@ -1,4 +1,4 @@
-var adoptData = JSON.parse(localStorage.getItem('reminderList'));
+var adaptedData = JSON.parse(localStorage.getItem('reminderList'));
 var filteredGoldRowList = [];
 var filteredCoralRowList = [];
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -83,6 +83,65 @@ $('body').click(function (event) {
     overlay.classList.add('hideModal');
   }
 });
+
+//turning off notice alert pop up
+var turnOffAlert = function (noticeId) {
+  adaptedData = JSON.parse(localStorage.getItem('reminderList'));
+  adaptedData[noticeId].isNotified = true;
+  localStorage.setItem('reminderList', JSON.stringify(adaptedData));
+  return '';
+}
+
+//TODO alert notifications on pop up window
+var alertNotification = function (element, id) {
+  console.log(element)
+  var tim2 = element.time;
+  var dateNow = new Date();
+  var datetext = dateNow.toTimeString();
+  datetext = datetext.split(' ')[0].substring(0, datetext.split(' ')[0].lastIndexOf(':'));
+  var tim1 = datetext;
+  var ary1 = tim1.split(':'), ary2 = tim2.split(':');
+  var minsdiff = parseInt(ary2[0], 10) * 60 + parseInt(ary2[1], 10) - parseInt(ary1[0], 10) * 60 - parseInt(ary1[1], 10);
+
+  var w = 400, h = 500;
+  var left = (screen.width - w) / 2;
+  var top = (screen.height - h) / 2;
+  if ((minsdiff == 30 || minsdiff == 20 || minsdiff == 15 || minsdiff == 10 || minsdiff == 5 || minsdiff == 3 || minsdiff == 2 || minsdiff == 1 || minsdiff == 0) && !element.isNotified) {
+    var myWindow = window.open("", "", 'width = ' + w + ', height = ' + h + ', top = ' + top + ', left = ' + left);
+    myWindow.document.write(`<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,100&display=swap');
+    @import url("./css/bootstyles.css");
+    @import url("./css/bootstrap.min.css");
+      body {
+        font-family: 'Montserrat', sans-serif !important;
+      }
+    </style>
+
+    <div class="text-center mt-5"><h5>Reminder: ${minsdiff} Minutes or Less Left</h5><br><br>
+    <table class="table">
+    <tbody>
+      <tr>
+        <th class="text-primary text-bold">Title: </th>
+        <td>${element.title}</td>
+      </tr>
+      <tr>
+        <th class="text-primary text-bold">Description: </th>
+        <td>${element.desc}</td>
+      </tr>
+      <tr>
+        <th class="text-primary text-bold">Time: </th>
+        <td>${convert24ToTwelveHrs(element.time)}</td>
+      </tr>
+    </tbody>
+    </table>
+    <button class="mt-3 px-5 btn btn-success" onclick="parent.window.close();${turnOffAlert(id)};">Do not Notify</button>
+    </div>
+    `);
+    myWindow.focus();
+  }
+
+}
+
 // reset all
 var resetAll = function () {
   localStorage.setItem('reminderList', '[]');
@@ -151,21 +210,21 @@ var deleteModal = function (deleteIndex) {
   yesBtn.addEventListener('click', function () {
     $('.confirmModal').addClass('hideModal');
     overlay.classList.add('hideModal');
-    adoptData = JSON.parse(localStorage.getItem('reminderList'));
-    adoptData = adoptData.filter((item, i) => i !== deleteIndex);
-    localStorage.setItem('reminderList', JSON.stringify(adoptData));
+    adaptedData = JSON.parse(localStorage.getItem('reminderList'));
+    adaptedData = adaptedData.filter((item, i) => i !== deleteIndex);
+    localStorage.setItem('reminderList', JSON.stringify(adaptedData));
     createCards(false, false);
   });
 };
 
 // clear all old notifications
 clearAll.addEventListener('click', function () {
-  adoptData = JSON.parse(localStorage.getItem('reminderList'));
+  adaptedData = JSON.parse(localStorage.getItem('reminderList'));
 
-  adoptData = adoptData.filter((item, i) => !oldNoticeIds.includes(i));
-  console.log(adoptData);
+  adaptedData = adaptedData.filter((item, i) => !oldNoticeIds.includes(i));
+  console.log(adaptedData);
 
-  localStorage.setItem('reminderList', JSON.stringify(adoptData));
+  localStorage.setItem('reminderList', JSON.stringify(adaptedData));
   createCards(true, true);
 });
 
@@ -195,9 +254,9 @@ var createCards = function (decision, decision2) {
     $('#oldNoticebtn').attr('onclick', `createCards(${params == 'true' ? 'false' : 'true'}, true)`);
   }
 
-  adoptData = JSON.parse(localStorage.getItem('reminderList'));
-  console.log(adoptData);
-  adoptData.forEach(function (element, i) {
+  adaptedData = JSON.parse(localStorage.getItem('reminderList'));
+  console.log(adaptedData);
+  adaptedData.forEach(function (element, i) {
     console.log(i);
     // object array er examdate gula re date object e convert from string
     var examDate = new Date(element.date);
@@ -220,17 +279,17 @@ var createCards = function (decision, decision2) {
         var mydays = timeLeft / (60 * 60 * 24 * 1000);
         var notificationDiv = `<div class="row col-12 reminderNotice list container  ml-2 mt-2 daysLeft${mydays}" data-days='${mydays}'  id="${i}">
 
-                <div class="col-6 m-auto p-0 wrapText text-left">
-                <span>📝 ${element.title}</span>
-                </div>
-                <div class="col-3 m-auto p-0 ">
-                <span>🔔 <span class="dayNumber">${mydays}</span> day left </span>
-                </div>
-                <div class="col-3 m-auto">
-                <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
-                <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i>
-                </div>
-                </div>`;
+                  <div class="col-6 m-auto p-0 wrapText text-left">
+                  <span>📝 ${element.title}</span>
+                  </div>
+                  <div class="col-3 m-auto p-0 ">
+                  <span>🔔 <span class="dayNumber">${mydays}</span> day left </span>
+                  </div>
+                  <div class="col-3 m-auto">
+                  <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
+                  <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i>
+                  </div>
+                  </div>`;
         $(notificationDiv).appendTo('.wrapperNotifi');
 
         console.log(mydays + ' day(s) remaining');
@@ -238,19 +297,21 @@ var createCards = function (decision, decision2) {
     }
     // current exam reminder functionality
     if (todayDate.getTime() == examDate.getTime()) {
+
+      alertNotification(element, i);
       //  modal + div bar
       var examReminder = `<div class="container col-12 row list examRemind ml-2 mt-2 " >
-            <div class="col-6 p-0 m-auto wrapText text-left">
-                <span>📝${element.title}</span>
-                </div>
-                <div class="col-3 p-0 m-auto ">
-                <span>🕒 ${tConvert(element.time)}</span>
-                </div>
-                <div class="col-3 m-auto ">
-                <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
-                <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}" onclick = updateModal(${i})></i>
-                </div>
-            </div>`;
+              <div class="col-6 p-0 m-auto wrapText text-left">
+                  <span>📝${element.title}</span>
+                  </div>
+                  <div class="col-3 p-0 m-auto ">
+                  <span>🕒 ${convert24ToTwelveHrs(element.time)}</span>
+                  </div>
+                  <div class="col-3 m-auto ">
+                  <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
+                  <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}" onclick = updateModal(${i})></i>
+                  </div>
+              </div>`;
       $(examReminder).appendTo('.wrapperExam');
     }
 
@@ -263,12 +324,12 @@ var createCards = function (decision, decision2) {
       if (decision) {
         // old notice functionality
         var oldNotices = `<div class="row col-12 reminderNotice text-left list container  ml-2 mt-2 "  id="${i}"><div class="col-5 m-auto p-0 wrapText text-left">
-        <span>📝 ${element.title}</span></div><div class="col-4 m-auto p-0">
-        <span>📅 ${element.date}</span></div><div class="col-3 m-auto">
-        <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
-        <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i>
-        </div>
-        </div>`;
+          <span>📝 ${element.title}</span></div><div class="col-4 m-auto p-0">
+          <span>📅 ${element.date}</span></div><div class="col-3 m-auto">
+          <i class="fa fa-trash-o mx-2" onclick = deleteModal(${i})></i>
+          <i class="fa fa-pencil mx-2 " data-toggle="modal" data-target="#exampleModal${i}"  onclick= updateModal(${i})></i>
+          </div>
+          </div>`;
         $(oldNotices).appendTo('.wrapperNotifi');
       }
     }
@@ -292,7 +353,7 @@ submitBtn.addEventListener('click', function (e) {
   e.preventDefault();
   // at first check if localstorage has any data or not
   if (remindTitle.value != '' || remindDate.value != '') {
-    adoptData = JSON.parse(localStorage.getItem('reminderList'));
+    adaptedData = JSON.parse(localStorage.getItem('reminderList'));
     RemindObj = {
       title: remindTitle.value,
       date: remindDate.value,
@@ -302,12 +363,12 @@ submitBtn.addEventListener('click', function (e) {
     };
 
     // if data is available then we will create another object and oush it to array then set the whole array to localstorage
-    if (adoptData) {
+    if (adaptedData) {
       console.log('first condition');
       // adopdata is a array of object here
 
-      adoptData.push(RemindObj);
-      localStorage.setItem('reminderList', JSON.stringify(adoptData));
+      adaptedData.push(RemindObj);
+      localStorage.setItem('reminderList', JSON.stringify(adaptedData));
     } else {
       // if not then also same functionality
       console.log('second condition');
@@ -328,7 +389,7 @@ submitBtn.addEventListener('click', function (e) {
 });
 
 // test
-function tConvert(time) {
+function convert24ToTwelveHrs(time) {
   // Check correct time format and split into components
   time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
@@ -348,46 +409,46 @@ $('.nav-link').click(function () {
 });
 
 var updateModal = function (clickIndex) {
-  adoptData = JSON.parse(localStorage.getItem('reminderList'));
+  adaptedData = JSON.parse(localStorage.getItem('reminderList'));
 
   console.log(clickIndex);
   $(`<!-- Modal -->
-    <div class="modal fade" id="exampleModal${clickIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header justify-content-center">
-            <h5 class="modal-title" id="exampleModalLabel">✏️Edit Your Reminder✏️</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-          <label>Title</label>
-          <input id="title" class="form-control" type="text" value = "${adoptData[clickIndex].title}">
-            <label for="password1">Select Date</label>
-          <input id="date" class="form-control" type="date" value = "${adoptData[clickIndex].date}">
-            <label for="password1">Select Time</label>
-          <input id="time" class="form-control" type="time" value = "${adoptData[clickIndex].time}">
-            <label for="password1">Description</label>
-          <textarea class="form-control" id="description" rows="2" placeholder="write something...">${adoptData[
+      <div class="modal fade" id="exampleModal${clickIndex}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header justify-content-center">
+              <h5 class="modal-title" id="exampleModalLabel">✏️Edit Your Reminder✏️</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <label>Title</label>
+            <input id="title" class="form-control" type="text" value = "${adaptedData[clickIndex].title}">
+              <label for="password1">Select Date</label>
+            <input id="date" class="form-control" type="date" value = "${adaptedData[clickIndex].date}">
+              <label for="password1">Select Time</label>
+            <input id="time" class="form-control" type="time" value = "${adaptedData[clickIndex].time}">
+              <label for="password1">Description</label>
+            <textarea class="form-control" id="description" rows="2" placeholder="write something...">${adaptedData[
       clickIndex
     ].desc}</textarea>
-            <label for="password1">Set Notification</label>
-          <input type="number" class="form-control" id="number" min="1" max="100" value = "${adoptData[clickIndex]
+              <label for="password1">Set Notification</label>
+            <input type="number" class="form-control" id="number" min="1" max="100" value = "${adaptedData[clickIndex]
       .notify}"
-              placeholder="set remaining day number">
-          </div>
-          <div class="modal-footer justify-content-center">
-          <button type="submit" class="btn btn-secondary rounded-pill col-md-12 shadow-lg " data-dismiss="modal" id="submitButton">Submit</button>
+                placeholder="set remaining day number">
+            </div>
+            <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-secondary rounded-pill col-md-12 shadow-lg " data-dismiss="modal" id="submitButton">Submit</button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>`).appendTo('body');
+      </div>`).appendTo('body');
 
   var Subbtn = document.querySelector(`#exampleModal${clickIndex} #submitButton`);
   Subbtn.addEventListener('click', function (e) {
     e.preventDefault();
-    adoptData = JSON.parse(localStorage.getItem('reminderList'));
+    adaptedData = JSON.parse(localStorage.getItem('reminderList'));
 
     RemindObj = {
       title: document.querySelector(`#exampleModal${clickIndex}  #title`).value,
@@ -396,9 +457,9 @@ var updateModal = function (clickIndex) {
       desc: document.querySelector(`#exampleModal${clickIndex} #description`).value,
       notify: document.querySelector(`#exampleModal${clickIndex} #number`).value == '' ? setAutoRemindDays(document.querySelector(`#exampleModal${clickIndex} #date`).value) : document.querySelector(`#exampleModal${clickIndex} #number`).value,
     };
-    adoptData[clickIndex] = RemindObj;
+    adaptedData[clickIndex] = RemindObj;
     console.log(RemindObj);
-    localStorage.setItem('reminderList', JSON.stringify(adoptData));
+    localStorage.setItem('reminderList', JSON.stringify(adaptedData));
 
     createCards(false, false);
   });
@@ -511,10 +572,11 @@ function copyToClipboard(text) {
 window.setInterval(function () {
   let update = new Date();
   textTitle.innerHTML = 'Today is ' + today + ', Time is: ' + formatAMPM(update);
+  //createCards();
   upcomingPainter();
   if (tomorrowClicked) classTime(filter(false));
   if (viewClicked) viewAll(true);
-}, 5000);
+}, 10000);
 
 classTime(filter(true));
 
@@ -556,7 +618,6 @@ function filter(compDay) {
 
 function viewAll(decision) {
   $('.tableDiv h5').remove();
-  // BUG
   colorizeTable('unfilter');
   document.querySelector('table').classList.remove('d-none');
   tomorrowClicked = false;
@@ -734,7 +795,6 @@ function classTime(arr = []) {
       }
 
       if (countedDiff <= 0 && countedDiff >= -15) {
-        //BUG
         var selectedTable = tableData[idArr[i] - 1]['cells'][0].querySelector('a');
 
         if (localStorage.getItem('currentClass') != tableData[idArr[i] - 1]['cells'][1].innerText) {
@@ -773,7 +833,6 @@ function classTime(arr = []) {
 
   upcomingClassTime = classHrMinFrmt[index];
   upcomingPainter();
-
 }
 
 function countdownTimer(upcomingClassTime) {
