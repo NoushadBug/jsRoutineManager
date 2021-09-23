@@ -572,7 +572,7 @@ function copyToClipboard(text) {
 window.setInterval(function () {
   let update = new Date();
   textTitle.innerHTML = 'Today is ' + today + ', Time is: ' + formatAMPM(update);
-  //createCards();
+  createCards();
   upcomingPainter();
   if (tomorrowClicked) classTime(filter(false));
   if (viewClicked) viewAll(true);
