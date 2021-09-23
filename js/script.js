@@ -84,13 +84,6 @@ $('body').click(function (event) {
   }
 });
 
-//turning off notice alert pop up
-var turnOffAlert = function (noticeId) {
-  adaptedData = JSON.parse(localStorage.getItem('reminderList'));
-  adaptedData[noticeId].isNotified = true;
-  localStorage.setItem('reminderList', JSON.stringify(adaptedData));
-  return '';
-}
 
 //TODO alert notifications on pop up window
 var alertNotification = function (element, id) {
@@ -102,15 +95,20 @@ var alertNotification = function (element, id) {
   var tim1 = datetext;
   var ary1 = tim1.split(':'), ary2 = tim2.split(':');
   var minsdiff = parseInt(ary2[0], 10) * 60 + parseInt(ary2[1], 10) - parseInt(ary1[0], 10) * 60 - parseInt(ary1[1], 10);
-
-  var w = 400, h = 500;
+  console.log(typeof element.isNotified == "undefined")
+  var w = 600, h = 500;
   var left = (screen.width - w) / 2;
   var top = (screen.height - h) / 2;
-  if ((minsdiff == 30 || minsdiff == 20 || minsdiff == 15 || minsdiff == 10 || minsdiff == 5 || minsdiff == 3 || minsdiff == 2 || minsdiff == 1 || minsdiff == 0) && !element.isNotified) {
+
+  if ((minsdiff == 30 || minsdiff == 20 || minsdiff == 15 || minsdiff == 10 || minsdiff == 5 || minsdiff == 3 || minsdiff == 2 || minsdiff == 1 || minsdiff == 0)
+    && (typeof element.isNotified == "undefined")
+    || (!element.isNotified && (typeof element.notifyInMins != "undefined") && element.notifyInMins == minsdiff)
+  ) {
     var myWindow = window.open("", "", 'width = ' + w + ', height = ' + h + ', top = ' + top + ', left = ' + left);
     myWindow.document.write(`<style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,100&display=swap');
     @import url("./css/bootstyles.css");
+    @import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
     @import url("./css/bootstrap.min.css");
       body {
         font-family: 'Montserrat', sans-serif !important;
@@ -132,12 +130,31 @@ var alertNotification = function (element, id) {
         <th class="text-primary text-bold">Time: </th>
         <td>${convert24ToTwelveHrs(element.time)}</td>
       </tr>
+      <tr>
+        <th>Notify before (in Minutes): </th>
+        <td><input type="text" id="notifyInMinsInp" class="form-control"/></td>
+      </tr>
     </tbody>
     </table>
-    <button class="mt-3 px-5 btn btn-success" onclick="parent.window.close();${turnOffAlert(id)};">Do not Notify</button>
+    <button class="mt-3 px-5 btn btn-success" id="doNotNotifyClicked" onclick ="turnOffAlert(${id})"> <i class="fa fa-check-circle" aria-hidden="true"></i> OK</button>
     </div>
+
+    <script src = "./js/jquery-2.2.4.min.js"></script>
+    <script>
+    var turnOffAlert = function (noticeId) {
+      adaptedData = JSON.parse(localStorage.getItem('reminderList'));
+      adaptedData[noticeId].isNotified = true;
+      if($('#notifyInMinsInp').val().length){
+        adaptedData[noticeId].notifyInMins = $('#notifyInMinsInp').val();
+        adaptedData[noticeId].isNotified = false;
+      }
+      localStorage.setItem('reminderList', JSON.stringify(adaptedData));
+      parent.window.close()
+    };
+    </script>
     `);
     myWindow.focus();
+
   }
 
 }
@@ -164,7 +181,6 @@ noBtn.addEventListener('click', function (e) {
 
 // colorize table while filtering
 function colorizeTable(mode) {
-  console.log('asdasd')
   tableData = document.querySelectorAll('.gradeX');
   // tableData[6].style.background = 'transparent';
   var rowCounter = 0;
@@ -191,7 +207,6 @@ function colorizeTable(mode) {
     filteredGoldRowList.forEach(item => tableData[item].style.backgroundColor = 'gold');
     filteredCoralRowList.forEach(item => tableData[item].style.backgroundColor = 'coral');
   }
-  console.log('test')
 }
 
 function tableBorderSetup() {
@@ -257,7 +272,6 @@ var createCards = function (decision, decision2) {
   adaptedData = JSON.parse(localStorage.getItem('reminderList'));
   console.log(adaptedData);
   adaptedData.forEach(function (element, i) {
-    console.log(i);
     // object array er examdate gula re date object e convert from string
     var examDate = new Date(element.date);
     // current date object subtract to notify date
@@ -266,7 +280,7 @@ var createCards = function (decision, decision2) {
 
     // format the string time to 12 hour Am/pm time
 
-    // current notice functionality
+    // upcoming notice functionality
     if (todayDate.getTime() >= notifDate && todayDate.getTime() < examDate.getTime()) {
       if (decision == false) {
         $('#clearAll').addClass('hideModal');
@@ -292,7 +306,7 @@ var createCards = function (decision, decision2) {
                   </div>`;
         $(notificationDiv).appendTo('.wrapperNotifi');
 
-        console.log(mydays + ' day(s) remaining');
+        // console.log(mydays + ' day(s) remaining');
       }
     }
     // current exam reminder functionality
@@ -529,7 +543,6 @@ $(function () {
     });
   });
 
-  console.log('hi ready');
   todayDate = currentYear + '-' + currentMonth + '-' + currentDate;
   // string to date object
   todayDate = new Date(todayDate);
@@ -568,11 +581,11 @@ function copyToClipboard(text) {
   }
 }
 
-
+//TODO:upcoming painter
 window.setInterval(function () {
   let update = new Date();
   textTitle.innerHTML = 'Today is ' + today + ', Time is: ' + formatAMPM(update);
-  createCards();
+  createCards(false, false);
   upcomingPainter();
   if (tomorrowClicked) classTime(filter(false));
   if (viewClicked) viewAll(true);
