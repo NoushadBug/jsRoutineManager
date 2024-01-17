@@ -691,13 +691,8 @@ function upcomingPainter() {
         upcomingClass = courseArr[index];
         upcomingContext.innerText = '⏰ ' + upcomingClass + ', at ' + formatAMPM(upcomingClassTime) + ' ⏰';
       }
-      if (today == 'Friday') {
-        upcomingContext.innerText = '✨ Today is Jumma Mubarak. Recite Surah Kahf today ✨';
-      }
     } else {
-      if (tomorrow == 'Friday') {
-        upcomingContext.innerText = '✨ Tomorrow is Jumma Mubarak ✨';
-      }
+    
 
     }
     upcomingContext.classList.add('text-primary');
